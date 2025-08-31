@@ -1,19 +1,28 @@
 import NavBar from "../components/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
-import Header from "../components/Header";
-const CreateEventPage = () => {
+import placeholderprofile from "../assets/placeholder-profile.webp"
+
+const EditEventPage = () => {
   const [formData, setFormData] = useState({
-    id: Math.floor(Math.random() * 1000000),
     title: "",
     date: "",
     from: "",
     to: "",
-    progress: 0,
+    progress: 100,
     status: "pending"
   });
 
+  const { id } = useParams();
   const [showConfirm, setShowConfirm] = useState(false);
+
+
+  useEffect(() => {
+    const events = JSON.parse(localStorage.getItem("events")) || [];
+    const eventToEdit = events.find((e) => e.id.toString() === id);
+    if (eventToEdit) setFormData(eventToEdit);
+  }, [id]);
 
   const handleChange = (e) => {
     console.log("hello handle ");
@@ -31,21 +40,27 @@ const CreateEventPage = () => {
     const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
 
     console.log("existing", existingEvents);
-    existingEvents.push(formData);
-    localStorage.setItem("events", JSON.stringify(existingEvents));
+    const updatedEvents = existingEvents.map((event) =>
+      event.id.toString() === id ? { ...event, ...formData } : event
+    );
+    localStorage.setItem("events", JSON.stringify(updatedEvents));
     setShowConfirm(true);
     setTimeout(() => {
       setShowConfirm(false);
+      navigate("/events"); // redirect back to list
     }, 1000);
   };
 
+  console.log(formData)
   return (
     <div className="flex flex-row">
       <NavBar />
-      <div className="flex-1 flex-col flex-grow justify-start items-center">
-        <Header />
+      <div className="gb-grey-100 flex flex-col flex-grow justify-start items-center">
+      <div className="flex flex-row p-4 w-full justify-end items-center bg-white">
+          <div className="profilePicPlaceholder"><img src={placeholderprofile} /></div>
+        </div>
         <div className="flex flex-col bg-gray-900 w-full justify-around px-8 py-20">
-          <h2 className="text-white">Create Event</h2>
+          <h2 className="text-white">Edit Event</h2>
           <form onSubmit={handleSubmit} className="text-white flex flex-col">
             <label htmlFor="title" className="w-full px-3 py-2">
               Title
@@ -133,13 +148,13 @@ const CreateEventPage = () => {
               />
             </div>
             <button className=" w-full px-3 py-2 mt-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-              Save
+              Update
             </button>
-            {showConfirm ? <div>Event saved successfully</div> : <div></div>}
+            {showConfirm ? <div>Event updated successfully</div> : <div></div>}
           </form>
         </div>
       </div>
     </div>
   );
 };
-export default CreateEventPage;
+export default EditEventPage;

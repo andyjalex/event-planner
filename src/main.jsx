@@ -6,8 +6,9 @@ import "./index.css";
 import HomePage from "./pages/HomePage";
 import CreateEventPage from "./pages/CreateEventPage";
 import HelpPage from "./pages/HelpPage";
-import Register from "./components/Register";
 import Login from "./pages/LoginPage";
+import EditEventPage from "./pages/EditEventPage";
+
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/createEvent",
     element: <CreateEventPage />,
+  },
+  {
+    path: "/editEvent/:id",
+    element: <EditEventPage />,
   },
   {
     path: "/help",
