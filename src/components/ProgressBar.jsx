@@ -9,10 +9,7 @@ const ProgressBar = (props) => {
     // Build start/end Date objects from date + time strings
     const from = new Date(`${props.date}T${props.timeFrom}:00`);
     const to = new Date(`${props.date}T${props.timeTo}:00`);
-  
-    console.log(props);
 
-    console.log(to)
     let progress = 0;
 
     // Before event starts → 0%
@@ -25,7 +22,6 @@ const ProgressBar = (props) => {
     }
     // During event → percentage of elapsed time
     else {
-      console.log(to)
       const total = to - from;       // ms between start and end
       const elapsed = now - from;    // ms since start
       progress = (elapsed / total) * 100;

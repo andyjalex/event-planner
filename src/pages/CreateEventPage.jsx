@@ -1,8 +1,12 @@
 import NavBar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import Header from "../components/Header";
+
 const CreateEventPage = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     id: Math.floor(Math.random() * 1000000),
     title: "",
@@ -22,20 +26,17 @@ const CreateEventPage = () => {
       [e.target.name]: e.target.value,
     }));
 
-    console.log(formData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
-
-    console.log("existing", existingEvents);
     existingEvents.push(formData);
     localStorage.setItem("events", JSON.stringify(existingEvents));
     setShowConfirm(true);
     setTimeout(() => {
       setShowConfirm(false);
+      navigate("/"); 
     }, 1000);
   };
 
@@ -44,7 +45,8 @@ const CreateEventPage = () => {
       <NavBar />
       <div className="flex-1 flex-col flex-grow justify-start items-center">
         <Header />
-        <div className="flex flex-col bg-gray-900 w-full justify-around px-8 py-20">
+        <div className="flex flex-col bg-gray-900 w-full justify-around px-8 py-10">
+          <Link to="/" className="text-white">Go Back</Link>
           <h2 className="text-white">Create Event</h2>
           <form onSubmit={handleSubmit} className="text-white flex flex-col">
             <label htmlFor="title" className="w-full px-3 py-2">

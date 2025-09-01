@@ -1,14 +1,25 @@
 import placeholderprofile from "../assets/placeholder-profile.webp";
 import { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
+  const {logout} = useAuth()
+  //function for handlinig logging out
+  const handleLogout = () => {
+    //call auth context logout method 
+    logout()
+    navigate("/login")
+  }
   return (
     <header className="flex flex-col bg-white shadow-md">
-      <div className="flex flex-row p-4 justify-between items-center bg-white">
+      <div className="flex flex-row p-4 justify-between md:justify-end items-center bg-white">
+      
         <button
-          className="lg:hidden text-gray-700"
+          className="lg:hidden md:hidden text-gray-700"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -16,6 +27,12 @@ const Header = () => {
         <div className="profilePicPlaceholder">
           <img src={placeholderprofile} />
         </div>
+        <button
+          className="text-gray-700 mx-2"
+          onClick={() => handleLogout()}
+        >
+          <FaSignOutAlt size={24} />
+        </button>
       </div>
       {/* Mobile dropdown menu */}
       {isOpen && (
@@ -31,7 +48,7 @@ const Header = () => {
           <ul className="flex flex-col items-center gap-4 pb-4 lg:hidden">
             <li>
               <Link to="/" onClick={() => setIsOpen(false)}>
-                Home
+                Dashboard
               </Link>
             </li>
             <li>

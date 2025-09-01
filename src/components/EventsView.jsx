@@ -6,22 +6,21 @@ const EventsView = () => {
   const [eventData, setEventData] = useState(null);
   const navigate = useNavigate();
 
-  const handleDelete = (title) => {
-    const updated = eventData.filter((event) => event.title !== title);
+
+  const handleDelete = (id) => {
+    //filter the events data to remove the event with the Id. 
+    const updated = eventData.filter((event) => event.id !== id);
     setEventData(updated);
+    //reset the events object in local storage
     localStorage.setItem("events", JSON.stringify(updated));
   };
 
   const handleEdit = (id) => {
-    // const updated = eventData.map((event) =>
-    //   event.name === name ? { ...event, ...updates } : event
-    // );
-    // setEventData(updated);
-    //localStorage.setItem("events", JSON.stringify(updated));
+    //navigate to the edit event screen and pass the id of the event  
     navigate(`/EditEvent/${id}`, { replace: true }); // Redirect to homepage
-
   };
 
+  //config object for the table component 
   const config = [
     { label: "Date", render: (event) => event.date },
     {
@@ -48,7 +47,7 @@ const EventsView = () => {
           </button>
           <button
             className="text-red-600 underline"
-            onClick={() => handleDelete(event.title)}
+            onClick={() => handleDelete(event.id)}
           >
             Delete
           </button>
@@ -60,27 +59,22 @@ const EventsView = () => {
   useEffect(() => {
     //get data from storage
     const eventData = localStorage.getItem("events");
-    if (!eventData || eventData === "undefined") return null;
+    if (!eventData || eventData === "undefined") return;
     setEventData(JSON.parse(eventData));
 
-    console.log(eventData);
-
-    //save data to state
   }, []);
 
+  //get a key for the table component
   const keyFn = (event) => {
-    return event.name;
+    return event.id;
   };
   
-  console.log(eventData)
   if(!eventData ) {
-    return 
-    <div>No event data</div>
+    return <div className="flex justify-center items-center bg-gray-200"><h5 className="text-black">No event data yet!</h5></div>;
   } else {
-    console.log(eventData)
     return (
-      <div className="flex flex-col justify-center  p-6 w-full bg-gray-200">
-        <div className="flex flex-col justify-center bg-white p-4">
+      <div className="flex flex-col justify-center  md:p-6 w-full bg-gray-200">
+        <div className="flex flex-col justify-center bg-white md:p-4">
         <h2>Events</h2>
         <h3>See and manage your event here</h3>
         <Table data={eventData} config={config} keyFn={keyFn} />
@@ -89,10 +83,5 @@ const EventsView = () => {
       )
   }
     
-   
-
-
-
-  
 };
 export default EventsView;

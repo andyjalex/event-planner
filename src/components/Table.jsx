@@ -1,16 +1,17 @@
 function Table({ data, config, keyFn }) {
-  console.log(data)
     const renderHeaders = config.map((column) => {
-      return <th key={column.label}>{column.label}</th>;
+      return <th key={column.label}
+      className="p-2 text-center border-b bg-gray-100"
+      >{column.label}</th>;
     });
     const renderedRows = data.map((rowData) => {
       const renderedCells = config.map((column) => {
         console.log(column)
         return (
-          <td className="p-2 text-center " key={column.label}>
+          <td className="p-2 text-center border-b break-words " key={column.label}>
             {column.render(rowData)}
           </td>
-        );
+        )
       });
       return (
         <tr key={keyFn(rowData)} className="border-b">
@@ -19,12 +20,14 @@ function Table({ data, config, keyFn }) {
       );
     });
     return (
-      <table className="table-auto border-spacing-2">
+      <div className="overflow-x-auto w-full">
+      <table className="table-auto w-full border-spacing-2 border-collapse ">
         <thead>
           <tr>{renderHeaders}</tr>
         </thead>
         <tbody>{renderedRows}</tbody>
       </table>
+      </div>
     );
   }
   

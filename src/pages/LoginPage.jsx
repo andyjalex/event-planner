@@ -150,7 +150,9 @@ const LoginPage = () => {
               Register here.
             </button>
           </div>
+          
         )}
+        <div className="mt-4"><p>**Any email and pw accepted**</p></div>
       </div>
     </div>
   );

@@ -1,6 +1,10 @@
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Register = ({ setShowRegister }) => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
   // Formik hook to manage form state, validation, and submission
   const formik = useFormik({
     initialValues: {
@@ -58,7 +62,8 @@ const Register = ({ setShowRegister }) => {
 
     // On successful form submission
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      login(values.email); // call login from context
+      navigate("/", { replace: true }); // Redirect to homepage
     },
   });
 

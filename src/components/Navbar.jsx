@@ -9,7 +9,7 @@ export default function NavBar() {
           <NavLink to="/"className={({ isActive }) => 
               isActive ? "text-blue-600 font-bold" : "text-gray-700"
             }
-          >Home</NavLink>
+          >Dashboard</NavLink>
         </li>
         <li className="m-1">
           <NavLink to="/createEvent" 

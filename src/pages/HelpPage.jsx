@@ -20,7 +20,7 @@ const HelpPage = () => {
               Fill in the event details: title, date, time.
             </li>
             <li>
-              Click the <strong>"Save"</strong> or <strong>"Create"</strong>{" "}
+              Click the <strong>"Save"</strong>{" "}
               button to publish your event.
             </li>
           </ol>
@@ -58,8 +58,8 @@ const HelpPage = () => {
             📋 Viewing All Your Events
           </h2>
           <p className="text-lg text-gray-800">
-            You can view all events you’ve created on the "Home"
-            page.o
+            You can view all events you’ve created on the "Dashboard"
+            page
           </p>
         </section>
 
