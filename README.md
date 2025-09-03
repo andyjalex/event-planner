@@ -10,7 +10,7 @@ cd <your-project-folder>
 2. Install dependencies
 npm install
 
-3. Run the app
+3. Run the app`
 npm run dev
 
 

@@ -4,7 +4,7 @@ import CreateEventPage from "../pages/CreateEventPage";
 import HelpPage from "../pages/HelpPage";
 import Login from "../pages/LoginPage";
 import EditEventPage from "../pages/EditEventPage";
-import ProtectedRoute from "../routes/protectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default createBrowserRouter([
     {
